@@ -7,7 +7,15 @@ app = Flask(__name__)
 def inicio():
     return """
         <h1>Ola, eu sou Wilson!</h1>
-        <p>Tenho 41 anos e estudo Informatica.</p>
+        <p>Tenho 41 anos e sou professor de Informatica.</p>
+    """
+
+@app.route("/sobre")
+def sobre():
+    return """
+        <h1>Sobre mim</h1>
+        <p>Sou professor de informática com 2 anos de atuação.</p>
+        <p>Desenvolvedor full-stack sênior!</p>
     """
 
 @app.route("/hobbies")
@@ -25,7 +33,7 @@ def hobbies():
 def futuro():
     return """
         <h1>Meu futuro</h1>
-        <p>Quero ser desenvolvedor porque gosto de resolver problemas com tecnologia.</p>
+        <p>Quero continuar trabalhando como desenvolvedor porque gosto de resolver problemas com tecnologia.</p>
     """
 
 @app.route("/contato")
