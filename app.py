@@ -44,6 +44,26 @@ def contato():
         <p>Youtube: vieira7915</p>
     """
 
+@app.route("/aluno/<nome>")
+def perfil(nome):
+    return f"<h1>Perfil de {nome}</h1>"
+
+@app.route("/tabuada/<int:numero>")
+def tabuada(numero):
+    html = f"<h1>Tabuada do {numero}</h1>"
+    for i in range(1, 11):
+        html += f"<p>{numero} x {i} = {numero * i}</p>"
+    return html
+
+@app.route("/soma/<int:a>/<int:b>")
+def soma(a, b):
+    return f"<h1>{a} + {b} = {a + b}</h1>"
+
+
+@app.route("/dobro/<int:n>")
+def dobro(n):
+    return f"<h1>O dobro de {n} é {n * 2}</h1>"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
