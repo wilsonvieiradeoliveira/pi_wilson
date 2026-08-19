@@ -23,18 +23,15 @@ def hobbies_vazio():
 
 @app.route("/futuro")
 def futuro():
-    return """
-        <h1>Meu futuro</h1>
-        <p>Quero continuar trabalhando como desenvolvedor porque gosto de resolver problemas com tecnologia.</p>
-    """
+    return render_template("futuro.html")
 
 @app.route("/contato")
 def contato():
-    return """
-        <h1>Contato</h1>
-        <p>Email: wilson22vieira@gmail.com</p>
-        <p>Youtube: vieira7915</p>
-    """
+    return render_template(
+        "contato.html",
+        email="wilson22vieira@gmail.com",
+        youtube="vieira7915",
+    )
 
 @app.route("/perfil")
 def perfil():
@@ -48,27 +45,24 @@ def perfil_nome(nome):
 
 @app.route("/aluno/<nome>")
 def aluno(nome):
-    return f"<h1>Perfil de {nome}</h1>"
+    return render_template("aluno.html", nome=nome)
 
 @app.route("/recado/<nome>")
 def recado(nome):
-    return f"<h1>Recado para {nome}</h1><p>Obrigado por visitar meu cartão de visita, {nome}!</p>"
+    return render_template("recado.html", nome=nome)
 
 @app.route("/tabuada/<int:numero>")
 def tabuada(numero):
-    html = f"<h1>Tabuada do {numero}</h1>"
-    for i in range(1, 11):
-        html += f"<p>{numero} x {i} = {numero * i}</p>"
-    return html
+    return render_template("tabuada.html", numero=numero)
 
 @app.route("/soma/<int:a>/<int:b>")
 def soma(a, b):
-    return f"<h1>{a} + {b} = {a + b}</h1>"
+    return render_template("soma.html", a=a, b=b)
 
 
 @app.route("/dobro/<int:n>")
 def dobro(n):
-    return f"<h1>O dobro de {n} é {n * 2}</h1>"
+    return render_template("dobro.html", n=n)
 
 
 if __name__ == "__main__":

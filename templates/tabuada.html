@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block titulo %}Tabuada do {{ numero }}{% endblock %}
+
+{% block conteudo %}
+    <h1>Tabuada do {{ numero }}</h1>
+    {% for i in range(1, 11) %}
+        <p>{{ numero }} x {{ i }} = {{ numero * i }}</p>
+    {% endfor %}
+{% endblock %}
