@@ -48,6 +48,10 @@ def contato():
 def perfil(nome):
     return f"<h1>Perfil de {nome}</h1>"
 
+@app.route("/recado/<nome>")
+def recado(nome):
+    return f"<h1>Recado para {nome}</h1><p>Obrigado por visitar meu cartão de visita, {nome}!</p>"
+
 @app.route("/tabuada/<int:numero>")
 def tabuada(numero):
     html = f"<h1>Tabuada do {numero}</h1>"
