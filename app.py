@@ -1,14 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def inicio():
-    return """
-        <h1>Ola, eu sou Wilson!</h1>
-        <p>Tenho 41 anos e sou professor de Informatica.</p>
-    """
+    return render_template("index.html")
 
 @app.route("/sobre")
 def sobre():
