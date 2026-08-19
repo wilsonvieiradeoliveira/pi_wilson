@@ -9,11 +9,7 @@ def inicio():
 
 @app.route("/sobre")
 def sobre():
-    return """
-        <h1>Sobre mim</h1>
-        <p>Sou professor de informática com 2 anos de atuação.</p>
-        <p>Desenvolvedor full-stack sênior!</p>
-    """
+    return render_template("sobre.html")
 
 @app.route("/hobbies")
 def hobbies():

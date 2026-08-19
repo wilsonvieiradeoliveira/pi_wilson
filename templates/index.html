@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cartão de Visita</title>
-</head>
-<body>
-    <h1>Olá, eu sou Wilson!</h1>
+{% extends "base.html" %}
+
+{% block titulo %}Início{% endblock %}
+
+{% block conteudo %}
+    <h1>Olá, eu sou <span class="destaque">Wilson</span>!</h1>
     <p>Tenho 41 anos e sou professor de Informática.</p>
-</body>
-</html>
+{% endblock %}
