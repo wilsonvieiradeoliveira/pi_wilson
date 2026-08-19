@@ -13,14 +13,13 @@ def sobre():
 
 @app.route("/hobbies")
 def hobbies():
-    return """
-        <h1>Meus hobbies</h1>
-        <ul>
-            <li>Jogar bola</li>
-            <li>Ouvir música</li>
-            <li>Jogar Vídeo Game</li>
-        </ul>
-    """
+    lista = ["Jogar bola", "Ouvir música", "Jogar Vídeo Game"]
+    return render_template("hobbies.html", hobbies=lista)
+
+
+@app.route("/hobbies-vazio")
+def hobbies_vazio():
+    return render_template("hobbies.html", hobbies=[])
 
 @app.route("/futuro")
 def futuro():
