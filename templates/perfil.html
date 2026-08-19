@@ -2,18 +2,8 @@
 
 {% block titulo %}Perfil de {{ nome }}{% endblock %}
 
-{% block estilo %}
-main {
-    background-color: #eaf2ff;
-}
-.nome-destaque {
-    font-size: 1.4em;
-    color: #d1495b;
-}
-{% endblock %}
-
 {% block conteudo %}
-    <h1>Perfil de <span class="nome-destaque">{{ nome }}</span></h1>
+    <h1>Perfil de {{ nome }}</h1>
     <p>{{ nome }} tem {{ idade }} anos.</p>
     {% if curso %}
         <p>Curso: {{ curso }}</p>

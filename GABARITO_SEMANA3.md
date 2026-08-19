@@ -39,13 +39,12 @@ def perfil_nome(nome):
 ```
 Implementada em [app.py](app.py#L46-L48), usando [templates/perfil.html](templates/perfil.html).
 
-**Mini-desafio (estilizar perfil.html):** em vez de um `<style>` isolado dentro do
-`perfil.html`, foi adicionado um bloco extra `{% block estilo %}{% endblock %}` dentro
-do `<style>` do `base.html` (ver [templates/base.html](templates/base.html#L48)). Isso
-permite que `perfil.html` injete CSS próprio (fundo diferente, nome em destaque com
-`.nome-destaque`) sem perder o menu e a estrutura herdada — o melhor dos dois mundos.
-O `{{ nome }}` continua funcionando normalmente com qualquer nome passado na URL,
-porque a substituição do Jinja2 acontece antes da herança influenciar o resultado.
+**Mini-desafio (estilizar perfil.html):** a estilização em si foi deixada propositalmente
+de fora por enquanto — `base.html` e as páginas filhas estão sem CSS. O visual do site
+será resolvido em uma aula futura com Bootstrap offline, então o HTML fica "limpo" hoje
+para não competir com as classes do Bootstrap depois. O `{{ nome }}` já funciona
+normalmente com qualquer nome passado na URL, independentemente de existir CSS ou não —
+a substituição do Jinja2 acontece antes de qualquer estilo ser aplicado.
 
 ## Aula 3 — Herança de templates: base.html
 
@@ -66,8 +65,8 @@ reintroduziria o problema original (duplicação e risco de inconsistência).
 **O que acontece se a filha esquecer o `extends`:** testado diretamente — sem a linha
 `{% extends "base.html" %}`, o `{% block conteudo %}` deixa de ser um "encaixe" e passa
 a ser renderizado como conteúdo solto. O resultado é uma página **sem** `<html>`,
-sem `<head>`, sem CSS e sem o `<nav>` do menu — só o HTML cru que estava dentro do
-bloco aparece na tela, sem nenhuma formatação nem navegação.
+sem `<head>` e sem o `<nav>` do menu — só o HTML cru que estava dentro do bloco
+aparece na tela, sem nenhuma navegação.
 
 ## Aula 4 — Listas no template: {% for %}
 
