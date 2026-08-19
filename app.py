@@ -41,8 +41,18 @@ def contato():
         <p>Youtube: vieira7915</p>
     """
 
+@app.route("/perfil")
+def perfil():
+    return render_template("perfil.html", nome="Ana", idade=15, curso=None)
+
+
+@app.route("/perfil/<nome>")
+def perfil_nome(nome):
+    return render_template("perfil.html", nome=nome, idade=15, curso="Informática")
+
+
 @app.route("/aluno/<nome>")
-def perfil(nome):
+def aluno(nome):
     return f"<h1>Perfil de {nome}</h1>"
 
 @app.route("/recado/<nome>")

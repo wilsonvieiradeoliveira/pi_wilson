@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de {{ nome }}</title>
+    <style>
+        body {
+            background-color: #eaf2ff;
+            font-family: 'Segoe UI', Verdana, sans-serif;
+        }
+        .nome-destaque {
+            font-size: 1.4em;
+            color: #d1495b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Perfil de <span class="nome-destaque">{{ nome }}</span></h1>
+    <p>{{ nome }} tem {{ idade }} anos.</p>
+    {% if curso %}
+        <p>Curso: {{ curso }}</p>
+    {% endif %}
+</body>
+</html>
