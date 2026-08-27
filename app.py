@@ -7,9 +7,11 @@ app = Flask(__name__)
 def inicio():
     return render_template("index.html")
 
+
 @app.route("/sobre")
 def sobre():
     return render_template("sobre.html")
+
 
 @app.route("/hobbies")
 def hobbies():
@@ -21,9 +23,11 @@ def hobbies():
 def hobbies_vazio():
     return render_template("hobbies.html", hobbies=[])
 
+
 @app.route("/futuro")
 def futuro():
     return render_template("futuro.html")
+
 
 @app.route("/contato")
 def contato():
@@ -32,6 +36,13 @@ def contato():
         email="wilson22vieira@gmail.com",
         youtube="vieira7915",
     )
+
+
+@app.route("/produto")
+def produto():
+    p = {"nome": "Caderno", "preco": 12.50, "estoque": 0, "marca": "Tilibra"}
+    return render_template("produto.html", produto=p)
+
 
 @app.route("/perfil")
 def perfil():
@@ -47,13 +58,16 @@ def perfil_nome(nome):
 def aluno(nome):
     return render_template("aluno.html", nome=nome)
 
+
 @app.route("/recado/<nome>")
 def recado(nome):
     return render_template("recado.html", nome=nome)
 
+
 @app.route("/tabuada/<int:numero>")
 def tabuada(numero):
     return render_template("tabuada.html", numero=numero)
+
 
 @app.route("/soma/<int:a>/<int:b>")
 def soma(a, b):
