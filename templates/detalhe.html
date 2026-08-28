@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    {% if produto %}
+        <h1>Detalhes do Produto</h1>
+        <h2>{{ produto.nome }}</h2>
+        <p>
+            <strong>Preço:</strong>
+            R$ {{ "%.2f"|format(produto.preco) }}
+        </p>
+        <p>
+            <strong>Estoque:</strong>
+            {{ produto.estoque }}
+        </p>
+        {% if produto.estoque == 0 %}
+            <p>
+                <strong>Esgotado</strong>
+            </p>
+        {% else %}
+            <p>
+                Produto disponível.
+            </p>
+        {% endif %}
+    {% else %}
+        <p>
+            <strong>Produto não encontrado. </strong>
+        </p>  
+    {% endif %}
+{% endblock %}
