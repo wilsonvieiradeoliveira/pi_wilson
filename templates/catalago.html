@@ -5,22 +5,44 @@
 {% block conteudo %}
     <h1>Produtos</h1>
     {% if produtos %}
-        <table class="table table-striped">
-        <tr><th>Produto</th><th>Preco</th><th>Estoque</th></tr>
-        {% for p in produtos %}
-            {% if p.estoque == 0 %}
-                <tr style="background: #c6b3b3">
-            {% else %}
+        <div class="row">
+            {% for p in produtos %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ p.nome }}
+                            {% if p.estoque == 0 %}
+                                <span class="badge bg-danger">Esgotado</span>
+                            {% elif p.preco < 10 %}
+                                <span class="badge bg-success">Oferta</span>
+                            {% endif %}
+                        </h5>
+                        <p class="card-text">R$ {{ "%.2f"|format(p.preco) }}</p>
+                        <a href="/produto/{{ loop.index0 }}" class="btn btn-primary">Comprar</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2 class="mt-5">Painel administrativo</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr><th>Produto</th><th>Preco</th><th>Estoque</th></tr>
+            </thead>
+            <tbody>
+                {% for p in produtos %}
                 <tr>
-            {% endif %}
-            <td><a href="/produto/{{ loop.index0 }}">{{ p.nome }}</a></td>
-            <td>R$ {{ "%.2f"|format(p.preco) }}</td>
-            <td>{{ p.estoque }}</td>
+                    <td><a href="/produto/{{ loop.index0 }}">{{ p.nome }}</a></td>
+                    <td>R$ {{ "%.2f"|format(p.preco) }}</td>
+                    <td>{{ p.estoque }}</td>
                 </tr>
-        {% endfor %}
+                {% endfor %}
+            </tbody>
         </table>
     {% else %}
         <p>Nenhum produto cadastrado ainda.</p>
-    {% endif %} 
+    {% endif %}
 
 {% endblock %}
