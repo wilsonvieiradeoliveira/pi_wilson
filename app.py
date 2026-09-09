@@ -14,6 +14,7 @@ produtos = [
     {"nome": "Mochila", "preco": 89.90, "estoque": 3},
     {"nome": "Estojo", "preco": 25.90, "estoque": 5},
     {"nome": "Lápis", "preco": 1.50, "estoque": 0},
+    {"nome": "Caneta Azul", "preco": 10.50, "estoque": 9},
 ]
 
 
