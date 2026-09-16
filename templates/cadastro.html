@@ -5,6 +5,10 @@
 {% block conteudo %}
     <h1>Cadastrar produto</h1>
 
+    {% if erro %}
+        <div class="alert alert-danger">{{ erro }}</div>
+    {% endif %}
+
     <form method="post">
         <div class="mb-3">
             <label class="form-label">Nome</label>

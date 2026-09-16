@@ -99,9 +99,24 @@ def catalago():
 @app.route("/cadastro", methods=["GET", "POST"])
 def cadastro():
     if request.method == "POST":
+        nome = request.form["nome"].strip()
+        erro = None
+
+        if not nome:
+            erro = "Preencha o nome do produto."
+
+        if not erro:
+            try:
+                preco = float(request.form["preco"])
+            except ValueError:
+                erro = "Preco invalido."
+
+        if erro:
+            return render_template("cadastro.html", erro=erro)
+
         novo = {
-            "nome": request.form["nome"],
-            "preco": float(request.form["preco"]),
+            "nome": nome,
+            "preco": preco,
             "estoque": int(request.form["estoque"]),
         }
         produtos.append(novo)
