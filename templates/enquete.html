@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block titulo %}Enquete{% endblock %}
+
+{% block conteudo %}
+    <h1>Enquete</h1>
+    <form method="post">
+        <p>Qual o melhor lanche da cantina? E por quê?</p>
+        <div class="mb-3">
+            <label class="form-label">Voto</label>
+            <input type="text" name="voto" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Motivo</label>
+            <input type="text" name="motivo" class="form-control" required>
+        </div>
+        <button class="btn btn-primary mt-2">Votar</button>
+    </form>
+{% endblock %}

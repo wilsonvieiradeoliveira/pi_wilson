@@ -96,6 +96,15 @@ def catalago():
     return render_template("catalago.html", produtos=lista, busca=busca)
 
 
+@app.route("/enquete", methods=["GET", "POST"])
+def enquete():
+    if request.method == "POST":
+        voto = request.form["voto"]
+        motivo = request.form["motivo"]
+        return render_template("obrigado.html", voto=voto, motivo=motivo)
+    return render_template("enquete.html")
+
+
 @app.route("/produto")
 def produto():
     p = {"nome": "Caderno", "preco": 12.50, "estoque": 0, "marca": "Tilibra"}
