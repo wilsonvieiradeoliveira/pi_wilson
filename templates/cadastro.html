@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titulo %}Cadastrar produto{% endblock %}
+
+{% block conteudo %}
+    <h1>Cadastrar produto</h1>
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Nome</label>
+            <input type="text" name="nome" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Preço</label>
+            <input type="number" name="preco" step="0.01" min="0" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Estoque</label>
+            <input type="number" name="estoque" min="0" class="form-control" required>
+        </div>
+        <button class="btn btn-primary">Cadastrar</button>
+    </form>
+{% endblock %}

@@ -96,6 +96,19 @@ def catalago():
     return render_template("catalago.html", produtos=lista, busca=busca)
 
 
+@app.route("/cadastro", methods=["GET", "POST"])
+def cadastro():
+    if request.method == "POST":
+        novo = {
+            "nome": request.form["nome"],
+            "preco": float(request.form["preco"]),
+            "estoque": int(request.form["estoque"]),
+        }
+        produtos.append(novo)
+        return redirect(url_for("catalago"))
+    return render_template("cadastro.html")
+
+
 @app.route("/enquete", methods=["GET", "POST"])
 def enquete():
     if request.method == "POST":
