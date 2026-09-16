@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -89,7 +89,11 @@ def dobro(n):
 
 @app.route("/catalago")
 def catalago():
-    return render_template("catalago.html", produtos=produtos)
+    busca = request.args.get("busca", "")
+    lista = produtos
+    if busca:
+        lista = [p for p in produtos if busca.lower() in p["nome"].lower()]
+    return render_template("catalago.html", produtos=lista, busca=busca)
 
 
 @app.route("/produto")

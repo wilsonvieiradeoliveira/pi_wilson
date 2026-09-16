@@ -4,6 +4,16 @@
 
 {% block conteudo %}
     <h1>Produtos</h1>
+
+    <form method="get" class="row g-2 mb-4">
+        <div class="col-auto">
+            <input type="text" name="busca" value="{{ busca }}" class="form-control" placeholder="Buscar produto...">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+
     {% if produtos %}
         <div class="row">
             {% for p in produtos %}
