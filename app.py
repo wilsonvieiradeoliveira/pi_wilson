@@ -111,6 +111,9 @@ def cadastro():
             except ValueError:
                 erro = "Preco invalido."
 
+        if not erro and preco <= 0:
+            erro = "O preco deve ser maior que zero."
+
         if erro:
             return render_template("cadastro.html", erro=erro)
 
@@ -118,6 +121,7 @@ def cadastro():
             "nome": nome,
             "preco": preco,
             "estoque": int(request.form["estoque"]),
+            "categoria": request.form.get("categoria", ""),
         }
         produtos.append(novo)
         return redirect(url_for("catalago"))

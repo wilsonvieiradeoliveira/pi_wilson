@@ -29,6 +29,9 @@
                             {% endif %}
                         </h5>
                         <p class="card-text">R$ {{ "%.2f"|format(p.preco) }}</p>
+                        {% if p.categoria %}
+                            <p class="card-text"><small class="text-muted">{{ p.categoria }}</small></p>
+                        {% endif %}
                         <a href="/produto/{{ loop.index0 }}" class="btn btn-primary">Comprar</a>
                     </div>
                 </div>
