@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -16,6 +18,11 @@ produtos = [
     {"nome": "Lápis", "preco": 1.50, "estoque": 0},
     {"nome": "Caneta Azul", "preco": 10.50, "estoque": 9},
 ]
+
+
+def salvar_produtos():
+    with open("produtos.json", "w") as arquivo:
+        json.dump(produtos, arquivo, indent=4)
 
 
 @app.route("/")
@@ -124,6 +131,7 @@ def cadastro():
             "categoria": request.form.get("categoria", ""),
         }
         produtos.append(novo)
+        salvar_produtos()  # grava logo depois de cadastrar
         return redirect(url_for("catalago"))
     return render_template("cadastro.html")
 
