@@ -1,4 +1,5 @@
 import json
+import os
 
 from flask import Flask, render_template, request, redirect, url_for
 
@@ -10,19 +11,20 @@ email = "aluno@email.com"
 youtube = "Youtube_Aluno"
 lista_hobbies = ["Jogar bola", "Ouvir música", "Jogar Vídeo Game"]
 
-produtos = [
-    {"nome": "Caderno", "preco": 12.50, "estoque": 8},
-    {"nome": "Caneta", "preco": 2.00, "estoque": 0},
-    {"nome": "Mochila", "preco": 89.90, "estoque": 3},
-    {"nome": "Estojo", "preco": 25.90, "estoque": 5},
-    {"nome": "Lápis", "preco": 1.50, "estoque": 0},
-    {"nome": "Caneta Azul", "preco": 10.50, "estoque": 9},
-]
+
+def carregar_produtos():
+    if not os.path.exists("produtos.json"):
+        return []  # primeira vez: começa vazio
+    with open("produtos.json", "r") as arquivo:
+        return json.load(arquivo)
 
 
 def salvar_produtos():
     with open("produtos.json", "w") as arquivo:
         json.dump(produtos, arquivo, indent=4)
+
+
+produtos = carregar_produtos()
 
 
 @app.route("/")
