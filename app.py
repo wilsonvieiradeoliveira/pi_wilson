@@ -1,5 +1,4 @@
-import json
-import os
+import sqlite3
 
 from flask import Flask, render_template, request, redirect, url_for
 
@@ -12,34 +11,34 @@ youtube = "Youtube_Aluno"
 lista_hobbies = ["Jogar bola", "Ouvir música", "Jogar Vídeo Game"]
 
 
-def carregar_produtos():
-    if not os.path.exists("produtos.json"):
-        return []  # primeira vez: começa vazio
-    with open("produtos.json", "r") as arquivo:
-        return json.load(arquivo)
+def conectar():
+    con = sqlite3.connect("loja.db")
+    con.row_factory = sqlite3.Row
+    return con
 
 
-def salvar_produtos():
-    with open("produtos.json", "w") as arquivo:
-        json.dump(produtos, arquivo, indent=4)
+def criar_tabela():
+    con = conectar()
+    con.execute("""
+    CREATE TABLE IF NOT EXISTS produtos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        preco REAL NOT NULL,
+        estoque INTEGER NOT NULL
+    )
+    """)
+    con.close()
 
 
-produtos = carregar_produtos()
-
-
-def proximo_id():
-    maior = 0
-    for p in produtos:
-        if p["id"] > maior:
-            maior = p["id"]
-    return maior + 1
+criar_tabela()
 
 
 def buscar_produto(id_produto):
-    for p in produtos:
-        if p["id"] == id_produto:
-            return p
-    return None
+    con = conectar()
+    produto = con.execute("SELECT * FROM produtos WHERE id = ?",
+                          (id_produto,)).fetchone()
+    con.close()
+    return produto
 
 
 @app.route("/")
@@ -114,6 +113,9 @@ def dobro(n):
 @app.route("/catalago")
 def catalogo():
     busca = request.args.get("busca", "")
+    con = conectar()
+    produtos = con.execute("SELECT * FROM produtos").fetchall()
+    con.close()
     lista = produtos
     if busca:
         lista = [p for p in produtos if busca.lower() in p["nome"].lower()]
@@ -141,16 +143,15 @@ def cadastro():
         if erro:
             return render_template("cadastro.html", erro=erro)
 
-        novo = {
-            "id": proximo_id(),
-            "nome": nome,
-            "preco": preco,
-            "estoque": int(request.form["estoque"]),
-            "categoria": request.form.get("categoria", ""),
-        }
-        produtos.append(novo)
-        salvar_produtos()  # grava logo depois de cadastrar
+        estoque = int(request.form["estoque"])
+        con = conectar()
+        con.execute("INSERT INTO produtos (nome, preco, estoque) "
+                    "VALUES (?, ?, ?)", (nome, preco, estoque))
+        con.commit()
+        con.close()
+
         return redirect(url_for("catalogo"))
+
     return render_template("cadastro.html")
 
 
@@ -173,10 +174,11 @@ def detalhe(id_produto):
 
 @app.route("/excluir/<int:id_produto>", methods=["POST"])
 def excluir(id_produto):
-    produto = buscar_produto(id_produto)
-    if produto is not None:
-        produtos.remove(produto)
-        salvar_produtos()
+    con = conectar()
+    con.execute("DELETE FROM produtos WHERE id = ?", (id_produto,))
+    con.commit()
+    con.close()
+
     return redirect(url_for("catalogo"))
 
 
@@ -190,10 +192,14 @@ def editar(id_produto):
         if not nome:
             return render_template("editar.html", produto=produto,
                                    erro="Preencha o nome.")
-        produto["nome"] = nome
-        produto["preco"] = float(request.form["preco"])
-        produto["estoque"] = int(request.form["estoque"])
-        salvar_produtos()
+        preco = float(request.form["preco"])
+        estoque = int(request.form["estoque"])
+        con = conectar()
+        con.execute("UPDATE produtos SET nome = ?, preco = ?, "
+                    "estoque = ? WHERE id = ?",
+                    (nome, preco, estoque, id_produto))
+        con.commit()
+        con.close()
         return redirect(url_for("detalhe", id_produto=id_produto))
     return render_template("editar.html", produto=produto)
 
