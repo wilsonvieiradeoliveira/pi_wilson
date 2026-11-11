@@ -12,6 +12,12 @@
         {% else %}
             <p><strong>Estoque:</strong> {{ produto.estoque }}</p>
         {% endif %}
+        <a href="{{ url_for('editar', id_produto=produto.id) }}" class="btn btn-primary">Editar</a>
+        <form action="{{ url_for('excluir', id_produto=produto.id) }}"
+              method="post"
+              onsubmit="return confirm('Excluir este produto?')">
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
     {% else %}
     <p>Nenhum produto cadastrado ainda.</p>
     {% endif %} 

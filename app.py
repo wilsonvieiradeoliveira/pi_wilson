@@ -27,6 +27,21 @@ def salvar_produtos():
 produtos = carregar_produtos()
 
 
+def proximo_id():
+    maior = 0
+    for p in produtos:
+        if p["id"] > maior:
+            maior = p["id"]
+    return maior + 1
+
+
+def buscar_produto(id_produto):
+    for p in produtos:
+        if p["id"] == id_produto:
+            return p
+    return None
+
+
 @app.route("/")
 def inicio():
     return render_template("index.html", name=nome, idade=idade)
@@ -97,7 +112,7 @@ def dobro(n):
 
 
 @app.route("/catalago")
-def catalago():
+def catalogo():
     busca = request.args.get("busca", "")
     lista = produtos
     if busca:
@@ -127,6 +142,7 @@ def cadastro():
             return render_template("cadastro.html", erro=erro)
 
         novo = {
+            "id": proximo_id(),
             "nome": nome,
             "preco": preco,
             "estoque": int(request.form["estoque"]),
@@ -134,7 +150,7 @@ def cadastro():
         }
         produtos.append(novo)
         salvar_produtos()  # grava logo depois de cadastrar
-        return redirect(url_for("catalago"))
+        return redirect(url_for("catalogo"))
     return render_template("cadastro.html")
 
 
@@ -147,18 +163,39 @@ def enquete():
     return render_template("enquete.html")
 
 
-@app.route("/produto")
-def produto():
-    p = {"nome": "Caderno", "preco": 12.50, "estoque": 0, "marca": "Tilibra"}
-    return render_template("produto.html", produto=p)
+@app.route("/produto/<int:id_produto>")
+def detalhe(id_produto):
+    produto = buscar_produto(id_produto)
+    if produto is None:
+        return "Produto não encontrado", 404
+    return render_template("produto.html", produto=produto)
 
 
-@app.route("/produto/<int:id>")
-def detalhe(id):
-    if id < 0 or id >= len(produtos):
-        return render_template("detalhe.html", produto=False)
-    p = produtos[id]
-    return render_template("detalhe.html", produto=p)
+@app.route("/excluir/<int:id_produto>", methods=["POST"])
+def excluir(id_produto):
+    produto = buscar_produto(id_produto)
+    if produto is not None:
+        produtos.remove(produto)
+        salvar_produtos()
+    return redirect(url_for("catalogo"))
+
+
+@app.route("/editar/<int:id_produto>", methods=["GET", "POST"])
+def editar(id_produto):
+    produto = buscar_produto(id_produto)
+    if produto is None:
+        return "Produto não encontrado", 404
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        if not nome:
+            return render_template("editar.html", produto=produto,
+                                   erro="Preencha o nome.")
+        produto["nome"] = nome
+        produto["preco"] = float(request.form["preco"])
+        produto["estoque"] = int(request.form["estoque"])
+        salvar_produtos()
+        return redirect(url_for("detalhe", id_produto=id_produto))
+    return render_template("editar.html", produto=produto)
 
 
 if __name__ == "__main__":

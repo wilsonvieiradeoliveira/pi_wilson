@@ -21,7 +21,7 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">
-                            {{ p.nome }}
+                            <a href="{{ url_for('detalhe', id_produto=p.id) }}">{{ p.nome }}</a>
                             {% if p.estoque == 0 %}
                                 <span class="badge bg-danger">Esgotado</span>
                             {% elif p.preco < 10 %}
@@ -32,7 +32,7 @@
                         {% if p.categoria %}
                             <p class="card-text"><small class="text-muted">{{ p.categoria }}</small></p>
                         {% endif %}
-                        <a href="/produto/{{ loop.index0 }}" class="btn btn-primary">Comprar</a>
+                        <a href="{{ url_for('detalhe', id_produto=p.id) }}" class="btn btn-primary">Comprar</a>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <tbody>
                 {% for p in produtos %}
                 <tr>
-                    <td><a href="/produto/{{ loop.index0 }}">{{ p.nome }}</a></td>
+                    <td><a href="{{ url_for('detalhe', id_produto=p.id) }}">{{ p.nome }}</a></td>
                     <td>R$ {{ "%.2f"|format(p.preco) }}</td>
                     <td>{{ p.estoque }}</td>
                 </tr>
